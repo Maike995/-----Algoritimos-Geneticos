@@ -1,6 +1,6 @@
 
 
-package pkg21_09_algoritimo;
+package algoritimogenerico_cromossomo;
 
 import java.util.*;
 
