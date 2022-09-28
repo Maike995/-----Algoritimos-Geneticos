@@ -1,58 +1,115 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package algoritimogenerico_cromossomo;
 
-package pkg21_09_algoritimo;
 
-import java.util.Random;
 
-public class Cromossomo implements Comparable<Cromossomo>  {
-    
-    //1ª Etapa = Possivel Solução
-    
-    int []cromossomo = new int[22];
-    double fitnes;
-    
-    public Cromossomo(){
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+  
+      int tamanho = 1001;
+      ArrayList <Cromossomo> vetores = new ArrayList();
+      ArrayList<Cromossomo> novoMundo = new ArrayList<Cromossomo>();
+      ArrayList<Cromossomo> melhorAptidao = new ArrayList<Cromossomo>();
+      Random gerador = new Random();
+ 
+      
+                //2ª Etapa = População
+        for(int t =0; t<tamanho; t++){
         
-        Random gerador = new Random();
-        for(int i=0; i<cromossomo.length; i++){
-            
-            cromossomo[i]=gerador.nextInt(2); 
-        }
-    }
-    
-    @Override
-	public int compareTo(Cromossomo o) {
-			
-			Cromossomo outro = (Cromossomo) o;
-            
-			double fitAtual = this.fitnes;
-            double outroFit = outro.fitnes;
-           
-            if(fitAtual > outroFit){
-                return 1;
-            }else if(fitAtual < outroFit){
-                return -1;
-            }else{//São iguais. Você decide quem será escolhido.            	
-                return 1;
-                
-            }   }
-    
-    public double aptidao(){
-        
-        int decimal = 0;
-        for(int e=0; e<cromossomo.length; e++){
-            decimal = decimal + cromossomo[e]*(int)Math.pow(2,e);
+        Cromossomo bestfit = new Cromossomo();
+        vetores.add(bestfit);
+      
         }
       
-        double conversao = -1+decimal*3/Math.pow(2, 22)-1 ;
- 
-         fitnes = conversao*Math.sin(10*Math.PI*conversao)+1;
+                //3ª Etapa = Teste de aptidao
+        for(int x=0;x<vetores.size();x++){
+            
+        Cromossomo forte = new Cromossomo();
+        forte.aptidao();
         
-        return fitnes;
- 
-    }
+                //4ª Etapa = Torneio
+            for(int z=0;z<10;z++){
+                
+                Cromossomo aux = vetores.get(gerador.nextInt(1001));;
+
+                if (forte.fitnes < aux.fitnes) {
+                forte=aux;
+            }
+        melhorAptidao.add(forte);
+        forte.aptidao();
+        Collections.sort(melhorAptidao);
+        novoMundo.add(forte);
+        }
+            
+            
+                //5ª Etapa = Reconbinação
+        for(int i=0;i<vetores.size()*(0.95);i++){
+            
+            Cromossomo filho = new Cromossomo();
+            for(int q=0;q<12;q++){
+            filho.cromossomo[q] = vetores.get(gerador.nextInt(1001)).cromossomo[q];
+            
+            }
+            for(int w=11;w<22;w++){
+            filho.cromossomo[w] = vetores.get(gerador.nextInt(1001)).cromossomo[w];
+            }
+            
+            melhorAptidao.add(filho);
+            filho.aptidao();
+            Collections.sort(melhorAptidao);
+            novoMundo.add(filho);
+            
+        }
+        
+                //6ª Etapa = Mutação
+        for(int i=0;i<vetores.size()*(0.05);i++){
+            
+            
+            Cromossomo mutante = new Cromossomo();
+            
+            mutante = vetores.get(gerador.nextInt(1001));
+        
+            int posicao = gerador.nextInt(22);
+            
+            if(mutante.cromossomo[posicao]== 1){
+               mutante.cromossomo[posicao] = 0;
+            } else{
+               mutante.cromossomo[posicao] = 1; 
+                        }
+               
+            mutante.aptidao();
+         melhorAptidao.add(mutante);
+          Collections.sort(melhorAptidao);
+          
+            novoMundo.add(mutante);
+            }
+            
+            
+            
+            Collections.sort(melhorAptidao);
+		
+		Iterator<Cromossomo> it = melhorAptidao.iterator();
+		
+		while(it.hasNext()) {			
+			System.out.println(it.next().fitnes);
+		}
+            
+        }     
+        
+        
+        }
+        
+        
+      
     
+        }
     
+        
     
-    
-    
-}
