@@ -1,0 +1,41 @@
+
+
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+      System.out.println();
+
+      int bestFit = 999;
+      int otmizacaoA = 0;
+      int otmizacaoB = 0;
+      ArrayList<Cromossomo> algoritimo = new ArrayList();
+      
+     for(int a = 1;a<11;a++){
+      for(int b = 1;b<11;b++){
+
+        Cromossomo gerado = new Cromossomo(a,b);
+        algoritimo.add(gerado);
+        if(bestFit > gerado.getFitnes() || gerado.getFitnes() <=0){
+          bestFit = (int)gerado.getFitnes();
+          otmizacaoA = a;
+          otmizacaoB = b;
+          }
+        
+      }
+     }
+
+  System.out.println("O valor Otimizado de a é "+otmizacaoA +"\nO valor Otimizado de b é "+ otmizacaoB);
+
+        }
+        
+        }
+        
+        
+      
+    
+        
+    
+        
