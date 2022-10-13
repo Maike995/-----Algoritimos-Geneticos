@@ -20,7 +20,7 @@ public class Main {
           
 
           // Caso seja o fitness que estou procurando ele entra nesse if
-          // ele salvao o objeto e sai do loop
+          // ele salva o objeto e sai do loop
           if(test.getFitnes()==0){
             funcao[0]=test;
             geracao = geracoes;
